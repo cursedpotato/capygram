@@ -1,3 +1,4 @@
+import 'package:capygram/responsive/responsive_layout_screen.dart';
 import 'package:capygram/utils/colors.dart';
 import 'package:flutter/material.dart';
 
@@ -17,7 +18,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData.dark().copyWith(
         scaffoldBackgroundColor: mobileBackgroundColor
       ),
-      home: const Scaffold(body: Text("Let's build the gram"),),
+      home: ResponsiveLayout(webScreenLayout: webScreenLayout, mobileScreenLayout: mobileScreenLayout),
     );
   }
 }
