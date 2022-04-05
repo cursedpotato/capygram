@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "101216335639",
+    "project_id": "capygram-aae3d",
+    "storage_bucket": "capygram-aae3d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:101216335639:android:4d7b27c1c8caaadadca952",
+        "android_client_info": {
+          "package_name": "com.iconmedios.capygram"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "101216335639-vce3rckpb0r3cogft234o98ekq28lbpc.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA-QimDB362aDLkP6lA-3s4KfOw5AFBdpM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "101216335639-vce3rckpb0r3cogft234o98ekq28lbpc.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
