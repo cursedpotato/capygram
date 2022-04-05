@@ -35,7 +35,7 @@ class _LoginScreenState extends State<LoginScreen> {
               SvgPicture.asset(
                 "assets/capygram_svg.svg",
                 color: Colors.white,
-                height: 80,
+                height: MediaQuery.of(context).size.height * 0.25,
               ),
               const SizedBox(height: 64),
               // Text input for email

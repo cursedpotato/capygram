@@ -1,4 +1,3 @@
-import 'package:capygram/screens/login_screen.dart';
 import 'package:capygram/screens/signin_screen.dart';
 import 'package:capygram/utils/colors.dart';
 import 'package:firebase_core/firebase_core.dart';
