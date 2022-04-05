@@ -1,3 +1,4 @@
+import 'package:capygram/auth_methods.dart';
 import 'package:capygram/utils/colors.dart';
 import 'package:capygram/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
@@ -27,6 +28,7 @@ class _SignupScreenState extends State<SignupScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 32),
@@ -91,6 +93,15 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(height: 24),
               // Button Login
               InkWell(
+                onTap: () async{
+                  String res =  await AuthMethods().signUpUser(
+                  email: _emailController.text,
+                  password: _passwordController.text,
+                  username: _usernmaeController.text,
+                  bio: _bioController.text,
+                );
+                debugPrint(res);
+                },
                 child: Container(
                   child: const Text("Sign up"),
                   width: double.infinity,
