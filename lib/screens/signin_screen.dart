@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:capygram/auth_methods.dart';
 import 'package:capygram/utils/colors.dart';
 import 'package:capygram/widgets/custom_textfield.dart';
@@ -25,6 +27,10 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
   }
 
+  void selectImage () {
+    
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,10 +39,10 @@ class _SignupScreenState extends State<SignupScreen> {
         child: Container(
           padding: const EdgeInsets.symmetric(horizontal: 32),
           width: double.infinity,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
+          child: ListView(
+            
             children: [
-              Flexible(child: Container(), flex: 2),
+              
               // Svg Image
               SvgPicture.asset(
                 "assets/capygram_svg.svg",
@@ -44,22 +50,24 @@ class _SignupScreenState extends State<SignupScreen> {
                 height: 235,
               ),
               // Circular widget to accept and show our selected file
-              Stack(
-                children: [
-                  const CircleAvatar(
-                    radius: 50,
-                    backgroundImage: NetworkImage(
-                        "https://media.discordapp.net/attachments/731335554909601833/928342711214432327/unknown.png?width=801&height=662"),
-                  ),
-                  Positioned(
-                    bottom: -10,
-                    left: 60,
-                    child: IconButton(
-                      onPressed: () {},
-                      icon: const Icon(Icons.add_a_photo_outlined),
+              Center(
+                child: Stack(
+                  children: [
+                    const CircleAvatar(
+                      radius: 50,
+                      backgroundImage: NetworkImage(
+                          "https://media.discordapp.net/attachments/731335554909601833/928342711214432327/unknown.png?width=801&height=662"),
                     ),
-                  )
-                ],
+                    Positioned(
+                      bottom: -10,
+                      left: 60,
+                      child: IconButton(
+                        onPressed: selectImage,
+                        icon: const Icon(Icons.add_a_photo_outlined),
+                      ),
+                    )
+                  ],
+                ),
               ),
               const SizedBox(height: 48),
               // Text input for usernmae
@@ -118,7 +126,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
               ),
               const SizedBox(height: 12),
-              Flexible(child: Container(), flex: 2),
+              
               // Transitioning to signing up
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
