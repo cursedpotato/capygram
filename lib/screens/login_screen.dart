@@ -58,6 +58,10 @@ class _LoginScreenState extends State<LoginScreen> {
     }
   }
 
+  void navigateToSignUp() {
+    Navigator.of(context).push(MaterialPageRoute(builder: (_)=> SignupScreen()));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -126,7 +130,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 8),
                   ),
                   GestureDetector(
-                    onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_)=> SignupScreen())),
+                    onTap: navigateToSignUp,
                     child: Container(
                       child: const Text(
                         "Sign up.",
