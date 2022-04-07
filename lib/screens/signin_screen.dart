@@ -1,10 +1,12 @@
-import 'dart:ffi';
+import 'dart:typed_data';
 
-import 'package:capygram/auth_methods.dart';
+import 'package:capygram/resources/auth_methods.dart';
 import 'package:capygram/utils/colors.dart';
+import 'package:capygram/utils/utils.dart';
 import 'package:capygram/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:image_picker/image_picker.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -18,6 +20,7 @@ class _SignupScreenState extends State<SignupScreen> {
   final _passwordController = TextEditingController();
   final _bioController = TextEditingController();
   final _usernmaeController = TextEditingController();
+  Uint8List? _image;
   @override
   void dispose() {
     _emailController.dispose();
@@ -27,8 +30,15 @@ class _SignupScreenState extends State<SignupScreen> {
     super.dispose();
   }
 
-  void selectImage () {
-    
+  void selectImage() async {
+    Uint8List img = await pickImage(ImageSource.gallery);
+    try {
+      setState(() {
+        _image = img;
+      });
+    } catch (e) {
+      debugPrint(e.toString());
+    }
   }
 
   @override
@@ -40,9 +50,7 @@ class _SignupScreenState extends State<SignupScreen> {
           padding: const EdgeInsets.symmetric(horizontal: 32),
           width: double.infinity,
           child: ListView(
-            
             children: [
-              
               // Svg Image
               SvgPicture.asset(
                 "assets/capygram_svg.svg",
@@ -53,11 +61,14 @@ class _SignupScreenState extends State<SignupScreen> {
               Center(
                 child: Stack(
                   children: [
-                    const CircleAvatar(
-                      radius: 50,
-                      backgroundImage: NetworkImage(
-                          "https://media.discordapp.net/attachments/731335554909601833/928342711214432327/unknown.png?width=801&height=662"),
-                    ),
+                    _image != null
+                        ? CircleAvatar(
+                            radius: 50, backgroundImage: MemoryImage(_image!))
+                        : const CircleAvatar(
+                            radius: 50,
+                            backgroundImage: NetworkImage(
+                                "https://180dc.org/wp-content/uploads/2016/08/default-profile.png"),
+                          ),
                     Positioned(
                       bottom: -10,
                       left: 60,
@@ -101,14 +112,15 @@ class _SignupScreenState extends State<SignupScreen> {
               const SizedBox(height: 24),
               // Button Login
               InkWell(
-                onTap: () async{
-                  String res =  await AuthMethods().signUpUser(
-                  email: _emailController.text,
-                  password: _passwordController.text,
-                  username: _usernmaeController.text,
-                  bio: _bioController.text,
-                );
-                debugPrint(res);
+                onTap: () async {
+                  String res = await AuthMethods().signUpUser(
+                    email: _emailController.text,
+                    password: _passwordController.text,
+                    username: _usernmaeController.text,
+                    bio: _bioController.text,
+                    image: _image!,
+                  );
+                  debugPrint(res);
                 },
                 child: Container(
                   child: const Text("Sign up"),
@@ -126,7 +138,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
               ),
               const SizedBox(height: 12),
-              
+
               // Transitioning to signing up
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
