@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -13,9 +12,9 @@ pickImage(ImageSource source) async {
   debugPrint("No image selected ");
 }
 
-showSnackbar(BuildContext context) {
-  const snackBar = SnackBar(
-    content: Text('Yay! A SnackBar!'),
+showSnackbar(BuildContext context, String content) {
+  final snackBar = SnackBar(
+    content: Text(content),
   );
 
   ScaffoldMessenger.of(context).showSnackBar(snackBar);

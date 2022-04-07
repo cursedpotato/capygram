@@ -1,7 +1,12 @@
+import 'package:capygram/resources/auth_methods.dart';
+import 'package:capygram/screens/home_screen.dart';
+import 'package:capygram/screens/signin_screen.dart';
 import 'package:capygram/utils/colors.dart';
+import 'package:capygram/utils/utils.dart';
 import 'package:capygram/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/services.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -13,11 +18,44 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   final _emailController = TextEditingController();
   final _passwordController = TextEditingController();
+  bool _isLoading = false;
+  @override
+  void initState() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+
+    super.initState();
+  }
+
   @override
   void dispose() {
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
     _emailController.dispose();
     _passwordController.dispose();
     super.dispose();
+  }
+
+  Future<void> loginUser() async {
+    setState(() {
+      _isLoading = true;
+    });
+    String res = await AuthMethods().loginUser(
+        email: _emailController.text, password: _passwordController.text);
+    setState(() {
+      _isLoading = false;
+    });
+    if (res == "Success") {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (_) => HomeScreen()));
+      showSnackbar(context, res);
+    } else {
+      showSnackbar(context, res);
+    }
   }
 
   @override
@@ -55,9 +93,15 @@ class _LoginScreenState extends State<LoginScreen> {
               // Button Login
               const SizedBox(height: 24),
               InkWell(
-
+                onTap: loginUser,
                 child: Container(
-                  child: const Text("Login"),
+                  child: _isLoading
+                      ? Center(
+                          child: CircularProgressIndicator(
+                            color: primaryColor,
+                          ),
+                        )
+                      : Text("Log in"),
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),
@@ -82,6 +126,7 @@ class _LoginScreenState extends State<LoginScreen> {
                     padding: const EdgeInsets.symmetric(vertical: 8),
                   ),
                   GestureDetector(
+                    onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_)=> SignupScreen())),
                     child: Container(
                       child: const Text(
                         "Sign up.",

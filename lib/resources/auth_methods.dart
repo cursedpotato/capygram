@@ -1,5 +1,4 @@
-
-
+// ignore_for_file: unnecessary_null_comparison
 
 import 'dart:typed_data';
 
@@ -17,32 +16,61 @@ class AuthMethods {
     required String username,
     required String bio,
     required Uint8List file,
+    bool isLoading = false,
     // required Uint8List file,
-  }) async{
+  }) async {
     String res = "Some error ocurred";
     try {
-      // ignore: unnecessary_null_comparison
-      if (email.isNotEmpty || password.isNotEmpty || username.isNotEmpty || bio.isNotEmpty || file != null   
-      ) {
+      if (email.isNotEmpty ||
+          password.isNotEmpty ||
+          username.isNotEmpty ||
+          bio.isNotEmpty ||
+          file != null) {
         // Register user
-        UserCredential credential = await _auth.createUserWithEmailAndPassword(email: email, password: password);
+        UserCredential credential = await _auth.createUserWithEmailAndPassword(
+            email: email, password: password);
 
-        String photoUrl = await StorageMethods().uploadImageToStorage('profilePics', file, false);
+        String photoUrl = await StorageMethods()
+            .uploadImageToStorage('profilePics', file, false);
         // Add user to our database
         _firestore.collection("users").doc(credential.user!.uid).set({
-          'username' : username,
-          'uid' : credential.user!.uid,
-          'email' : email,
-          'bio' : bio,
-          'followers' : [],
-          'following' : [],
-          'photoUrl' : photoUrl,
+          'username': username,
+          'uid': credential.user!.uid,
+          'email': email,
+          'bio': bio,
+          'followers': [],
+          'following': [],
+          'photoUrl': photoUrl,
         });
         //
         res = "success";
-      } else {
-      }
+      } else {}
     } catch (e) {
+      res = e.toString();
+    }
+    return res;
+  }
+
+  Future<String> loginUser({required String email, required String password}) async {
+    String res = 'Some error occurred ';
+
+    try {
+      if (email.isNotEmpty || password.isNotEmpty) {
+        await _auth.signInWithEmailAndPassword(email: email, password: password);
+        res = 'Success';       
+      }else{
+        res = 'Please enter all fields';
+      }
+    }
+    // You can specify the errors here
+    
+    // on FirebaseAuthException catch(e){
+    //   if (e.code == 'user-not-found') {
+        
+    //   } else {
+    //   }
+    // } 
+    catch (e) {
       res = e.toString();
     }
     return res;
