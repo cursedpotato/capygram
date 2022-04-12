@@ -1,5 +1,7 @@
 import 'package:capygram/resources/auth_methods.dart';
-import 'package:capygram/screens/home_screen.dart';
+import 'package:capygram/responsive/mobile_screen_layout.dart';
+import 'package:capygram/responsive/responsive_layout_screen.dart';
+import 'package:capygram/responsive/web_screen_layout.dart';
 import 'package:capygram/screens/signin_screen.dart';
 import 'package:capygram/utils/colors.dart';
 import 'package:capygram/utils/utils.dart';
@@ -51,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
     if (res == "Success") {
       Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (_) => HomeScreen()));
+          .pushReplacement(MaterialPageRoute(builder: (_) => ResponsiveLayout(webScreenLayout: WebScreenLayout(), mobileScreenLayout: MobileScreenLayout())));
       showSnackbar(context, res);
     } else {
       showSnackbar(context, res);

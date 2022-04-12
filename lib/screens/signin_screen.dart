@@ -1,6 +1,7 @@
 import 'dart:typed_data';
 
 import 'package:capygram/resources/auth_methods.dart';
+import 'package:capygram/responsive/mobile_screen_layout.dart';
 import 'package:capygram/screens/login_screen.dart';
 import 'package:capygram/utils/colors.dart';
 import 'package:capygram/utils/utils.dart';
@@ -8,6 +9,9 @@ import 'package:capygram/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:image_picker/image_picker.dart';
+
+import '../responsive/responsive_layout_screen.dart';
+import '../responsive/web_screen_layout.dart';
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({Key? key}) : super(key: key);
@@ -58,6 +62,8 @@ class _SignupScreenState extends State<SignupScreen> {
       _isLoading = false;
     });
     if (res == "success") {
+      Navigator.of(context)
+          .pushReplacement(MaterialPageRoute(builder: (_) => ResponsiveLayout(webScreenLayout: WebScreenLayout(), mobileScreenLayout: MobileScreenLayout())));
       showSnackbar(context, "Yay! Your account has been created");
     } else {
       showSnackbar(context, res);

@@ -2,6 +2,7 @@
 
 import 'dart:typed_data';
 
+import 'package:capygram/models/user.dart' as model;
 import 'package:capygram/resources/storage_methods.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -30,18 +31,21 @@ class AuthMethods {
         UserCredential credential = await _auth.createUserWithEmailAndPassword(
             email: email, password: password);
 
+           
+
         String photoUrl = await StorageMethods()
             .uploadImageToStorage('profilePics', file, false);
+        model.User user = model.User(
+          username: username,
+          uid: credential.user!.uid,
+          email: email,
+          bio: bio,
+          photoUrl: photoUrl,
+          followers: [],
+          following: [],
+        );
         // Add user to our database
-        _firestore.collection("users").doc(credential.user!.uid).set({
-          'username': username,
-          'uid': credential.user!.uid,
-          'email': email,
-          'bio': bio,
-          'followers': [],
-          'following': [],
-          'photoUrl': photoUrl,
-        });
+        _firestore.collection("users").doc(credential.user!.uid).set(user.toJson());
         //
         res = "success";
       } else {}
