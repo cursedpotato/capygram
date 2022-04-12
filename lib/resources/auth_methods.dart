@@ -10,6 +10,14 @@ import 'package:firebase_auth/firebase_auth.dart';
 class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  Future<model.UserModel> getUserDetails() async {
+    User currentUser  = _auth.currentUser!;
+
+    DocumentSnapshot snap = await _firestore.collection('users').doc(currentUser.uid).get();
+
+    return model.UserModel.fromSnap(snap);
+  } 
   // sign up user
   Future<String> signUpUser({
     required String email,
@@ -35,7 +43,7 @@ class AuthMethods {
 
         String photoUrl = await StorageMethods()
             .uploadImageToStorage('profilePics', file, false);
-        model.User user = model.User(
+        model.UserModel user = model.UserModel(
           username: username,
           uid: credential.user!.uid,
           email: email,
