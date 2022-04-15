@@ -2,7 +2,7 @@
 
 import 'dart:typed_data';
 
-import 'package:capygram/models/user.dart';
+import 'package:capygram/models/user_model.dart';
 import 'package:capygram/resources/storage_methods.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';

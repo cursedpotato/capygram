@@ -1,4 +1,4 @@
-import 'package:capygram/models/user.dart';
+import 'package:capygram/models/user_model.dart';
 import 'package:capygram/resources/auth_methods.dart';
 import 'package:flutter/widgets.dart';
 
