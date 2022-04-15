@@ -1,6 +1,7 @@
 import 'package:capygram/models/user.dart';
 import 'package:capygram/resources/auth_methods.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
+
 
 class UserProvider extends ChangeNotifier {
   UserModel? _user;

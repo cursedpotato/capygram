@@ -1,6 +1,8 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:capygram/models/user.dart';
+import 'package:capygram/providers/user_providers.dart';
+
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({Key? key}) : super(key: key);
@@ -10,28 +12,14 @@ class MobileScreenLayout extends StatefulWidget {
 }
 
 class _MobileScreenLayoutState extends State<MobileScreenLayout> {
-  String username = "";
-  @override
-  void initState() {
-    super.initState();
-    getUsername();
-  }
-
-  void getUsername() async {
-    DocumentSnapshot snap = await FirebaseFirestore.instance
-        .collection("users")
-        .doc(FirebaseAuth.instance.currentUser!.uid)
-        .get();
-    
-    setState(() {
-      username = (snap.data() as Map<String,dynamic>)["username"];
-    });
-  }
-
+  
+  
   @override
   Widget build(BuildContext context) {
+
+    UserModel user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
-      body: Center(child: Text("$username")),
+      body: Center(child: Text("${user.username}")),
     );
   }
 }

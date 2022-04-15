@@ -2,7 +2,7 @@
 
 import 'dart:typed_data';
 
-import 'package:capygram/models/user.dart' as model;
+import 'package:capygram/models/user.dart';
 import 'package:capygram/resources/storage_methods.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -11,12 +11,12 @@ class AuthMethods {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
-  Future<model.UserModel> getUserDetails() async {
+  Future<UserModel> getUserDetails() async {
     User currentUser  = _auth.currentUser!;
 
     DocumentSnapshot snap = await _firestore.collection('users').doc(currentUser.uid).get();
 
-    return model.UserModel.fromSnap(snap);
+    return UserModel.fromSnap(snap);
   } 
   // sign up user
   Future<String> signUpUser({
@@ -43,7 +43,7 @@ class AuthMethods {
 
         String photoUrl = await StorageMethods()
             .uploadImageToStorage('profilePics', file, false);
-        model.UserModel user = model.UserModel(
+        UserModel user = UserModel(
           username: username,
           uid: credential.user!.uid,
           email: email,
