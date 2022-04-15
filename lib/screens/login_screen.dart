@@ -53,7 +53,7 @@ class _LoginScreenState extends State<LoginScreen> {
     });
     if (res == "Success") {
       Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (_) => ResponsiveLayout(webScreenLayout: WebScreenLayout(), mobileScreenLayout: MobileScreenLayout())));
+          .pushReplacement(MaterialPageRoute(builder: (_) => const ResponsiveLayout(webScreenLayout: WebScreenLayout(), mobileScreenLayout: MobileScreenLayout())));
       showSnackbar(context, res);
     } else {
       showSnackbar(context, res);
@@ -61,7 +61,7 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void navigateToSignUp() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_)=> SignupScreen()));
+    Navigator.of(context).push(MaterialPageRoute(builder: (_)=> const SignupScreen()));
   }
 
   @override
@@ -102,12 +102,12 @@ class _LoginScreenState extends State<LoginScreen> {
                 onTap: loginUser,
                 child: Container(
                   child: _isLoading
-                      ? Center(
+                      ? const Center(
                           child: CircularProgressIndicator(
                             color: primaryColor,
                           ),
                         )
-                      : Text("Log in"),
+                      : const Text("Log in"),
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),

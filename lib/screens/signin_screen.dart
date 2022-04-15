@@ -63,7 +63,7 @@ class _SignupScreenState extends State<SignupScreen> {
     });
     if (res == "success") {
       Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (_) => ResponsiveLayout(webScreenLayout: WebScreenLayout(), mobileScreenLayout: MobileScreenLayout())));
+          .pushReplacement(MaterialPageRoute(builder: (_) => const ResponsiveLayout(webScreenLayout: WebScreenLayout(), mobileScreenLayout: MobileScreenLayout())));
       showSnackbar(context, "Yay! Your account has been created");
     } else {
       showSnackbar(context, res);
@@ -71,7 +71,7 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   navigateToLogin() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => LoginScreen() ,));
+    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const LoginScreen() ,));
   }
 
   @override
@@ -148,12 +148,12 @@ class _SignupScreenState extends State<SignupScreen> {
                 onTap: signUpUser,
                 child: Container(
                   child: _isLoading
-                      ? Center(
+                      ? const Center(
                           child: CircularProgressIndicator(
                             color: primaryColor,
                           ),
                         )
-                      : Text("Sign up"),
+                      : const Text("Sign up"),
                   width: double.infinity,
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(vertical: 12),

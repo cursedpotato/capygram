@@ -1,8 +1,6 @@
-import 'package:capygram/models/user.dart';
-import 'package:capygram/providers/user_providers.dart';
-
+import 'package:capygram/utils/colors.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
 class MobileScreenLayout extends StatefulWidget {
   const MobileScreenLayout({Key? key}) : super(key: key);
@@ -12,14 +10,88 @@ class MobileScreenLayout extends StatefulWidget {
 }
 
 class _MobileScreenLayoutState extends State<MobileScreenLayout> {
-  
-  
+  int _page = 0;
+  // TODO: we may use usePageController hook here
+  late PageController pageController;
+
+  @override
+  void initState() {
+    super.initState();
+    pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    pageController.dispose();
+  }
+
+  void onNavigationTapped(int page){
+    pageController.jumpToPage(page);
+  }
+
+  void onPageChanged(int page) {
+    setState(() {
+      _page = page;
+    });
+  }
   @override
   Widget build(BuildContext context) {
-
-    UserModel user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
-      body: Center(child: Text("${user.username}")),
+      body: PageView(
+        children: const [
+          Text('Feed'),
+          Text('Home'),
+          Text('Add'),
+          Text('Favorite'),
+          Text('Person')
+        ],
+        physics: const NeverScrollableScrollPhysics(),
+        controller: pageController,
+        onPageChanged: onPageChanged,
+      ),
+      bottomNavigationBar: CupertinoTabBar(
+        onTap: onNavigationTapped,
+        backgroundColor: mobileBackgroundColor,
+        items: [
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.home,
+                // This seems hard to maintain, may add a function here if possible
+                color: _page == 0 ? primaryColor : secondaryColor,
+              ),
+              label: '',
+              backgroundColor: primaryColor),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.search,
+                color: _page == 1 ? primaryColor : secondaryColor,
+              ),
+              label: '',
+              backgroundColor: primaryColor),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.add_circle,
+                color: _page == 2 ? primaryColor : secondaryColor,
+              ),
+              label: '',
+              backgroundColor: primaryColor),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.favorite,
+                color: _page == 3 ? primaryColor : secondaryColor,
+              ),
+              label: '',
+              backgroundColor: primaryColor),
+          BottomNavigationBarItem(
+              icon: Icon(
+                Icons.person,
+                color: _page == 4 ? primaryColor : secondaryColor,
+              ),
+              label: '',
+              backgroundColor: primaryColor),
+        ],
+      ),
     );
   }
 }
