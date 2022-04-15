@@ -1,5 +1,5 @@
 import 'package:capygram/providers/user_providers.dart';
-import 'package:capygram/utils/dimensions.dart';
+import 'package:capygram/utils/global_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 

@@ -1,4 +1,5 @@
 import 'package:capygram/utils/colors.dart';
+import 'package:capygram/utils/global_variables.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -39,13 +40,7 @@ class _MobileScreenLayoutState extends State<MobileScreenLayout> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
-        children: const [
-          Text('Feed'),
-          Text('Home'),
-          Text('Add'),
-          Text('Favorite'),
-          Text('Person')
-        ],
+        children:  homeScreenItems,
         physics: const NeverScrollableScrollPhysics(),
         controller: pageController,
         onPageChanged: onPageChanged,
