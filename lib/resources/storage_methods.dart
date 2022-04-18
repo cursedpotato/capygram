@@ -14,7 +14,7 @@ class StorageMethods {
     Reference ref =  _storage.ref().child(childName).child(_auth.currentUser!.uid);
 
     if (isPost) {
-      String id = const  Uuid().v1();
+      String id = DateTime.fromMicrosecondsSinceEpoch(12312).toString();
       ref.child(id);
 
     }

@@ -3,6 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class PostModel {
   final String description;
   final String uid;
+  final String username;
   final String postId;
   final DateTime datePublished;
   final String profImage;
@@ -12,7 +13,7 @@ class PostModel {
   const PostModel({
     required this.description,
     required this.uid,
-
+    required this.username,
     required this.postId,
     required this.datePublished,
     required this.profImage,
@@ -23,7 +24,7 @@ class PostModel {
   Map<String, dynamic> toJson() => {
         "description": postId,
         "uid": uid,
-
+        "username" : username,
         "postId": postId,
         "datePublished": datePublished,
         "profImage": profImage,
@@ -37,7 +38,7 @@ class PostModel {
     return PostModel(
       description: snapshot['postId'],
       uid: snapshot['uid'],
-      
+      username: snapshot['username'],
       postId: snapshot['postId'],
       datePublished: snapshot['datePublished'],
       profImage: snapshot['profImage'],
