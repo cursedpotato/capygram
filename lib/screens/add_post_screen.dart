@@ -8,7 +8,6 @@ import 'package:capygram/utils/utils.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
-import 'package:uuid/uuid.dart';
 
 class AddPostScreen extends StatefulWidget {
   AddPostScreen({Key? key}) : super(key: key);
@@ -63,17 +62,17 @@ class _AddPostScreenState extends State<AddPostScreen> {
     );
   }
 
-  Future<void> postImage(String uid, String username, String profImage) async {
+  postImage(String uid, String username, String profImage) async {
     setState(() {
       _isLoading = true;
     });
     try {
       String res = await FirestoreMehods().uploadPost(
-        _descriptionController.text,
-        _file!,
-        uid,
-        profImage,
-        username,
+        description: _descriptionController.text,
+        file: _file!,
+        uid: uid,
+        profImage: profImage,
+        username: username,
       );
       if (res == 'success') {
         showSnackbar(context, "Posted!");
@@ -89,7 +88,7 @@ class _AddPostScreenState extends State<AddPostScreen> {
     }
   }
 
-  void clearImage(){
+  void clearImage() {
     setState(() {
       _file = null;
     });
@@ -133,7 +132,9 @@ class _AddPostScreenState extends State<AddPostScreen> {
             ),
             body: Column(
               children: [
-                _isLoading ? const LinearProgressIndicator() : const Padding(padding: EdgeInsets.zero),
+                _isLoading
+                    ? const LinearProgressIndicator()
+                    : const Padding(padding: EdgeInsets.zero),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.start,
