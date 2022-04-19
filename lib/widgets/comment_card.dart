@@ -1,10 +1,10 @@
-import 'package:capygram/models/user_model.dart';
-import 'package:capygram/providers/user_providers.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:intl/intl.dart';
 
 class CommentCard extends StatefulWidget {
-  CommentCard({Key? key}) : super(key: key);
+  final snap;
+  CommentCard({Key? key, required this.snap}) : super(key: key);
 
   @override
   State<CommentCard> createState() => _CommentCardState();
@@ -13,7 +13,6 @@ class CommentCard extends StatefulWidget {
 class _CommentCardState extends State<CommentCard> {
   @override
   Widget build(BuildContext context) {
-    
     // TODO: maybe using a card widget here would be less agonizing
     return Container(
       padding: const EdgeInsets.symmetric(
@@ -22,9 +21,8 @@ class _CommentCardState extends State<CommentCard> {
       ),
       child: Row(
         children: [
-          const CircleAvatar(
-            backgroundImage: NetworkImage(
-                'https://image.shutterstock.com/image-illustration/grungy-painted-wood-texture-background-600w-262857968.jpg'),
+          CircleAvatar(
+            backgroundImage: NetworkImage(widget.snap['profilePic']),
             radius: 18,
           ),
           Expanded(
@@ -35,22 +33,25 @@ class _CommentCardState extends State<CommentCard> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   RichText(
-                    text: const TextSpan(
+                    text:  TextSpan(
                       children: [
                         TextSpan(
-                            text: 'username',
-                            style: TextStyle(fontWeight: FontWeight.bold)),
+                            text: widget.snap['name'],
+                            style: const TextStyle(fontWeight: FontWeight.bold)),
                         TextSpan(
-                          text: 'some description to insert',
+                          text: ' ${widget.snap['text'] }',
                         ),
                       ],
                     ),
                   ),
-                  const Padding(
-                    padding: EdgeInsets.only(top: 4),
+                  Padding(
+                    padding: const EdgeInsets.only(top: 4),
                     child: Text(
-                      '21/20/21',
-                      style: TextStyle(
+                       DateFormat.yMMMd()
+                        .format((widget.snap['datePublished'] as Timestamp)
+                            .toDate())
+                        .toString(),
+                      style: const TextStyle(
                         fontSize: 12,
                         fontWeight: FontWeight.w400,
                       ),
