@@ -1,5 +1,6 @@
 import 'package:capygram/models/user_model.dart';
 import 'package:capygram/providers/user_providers.dart';
+import 'package:capygram/resources/firestore_methods.dart';
 import 'package:capygram/utils/colors.dart';
 import 'package:capygram/widgets/like_animation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -16,7 +17,6 @@ class PostCard extends StatefulWidget {
 }
 
 class _PostCardState extends State<PostCard> {
-
   bool isLikeAnimating = false;
   @override
   Widget build(BuildContext context) {
@@ -86,7 +86,8 @@ class _PostCardState extends State<PostCard> {
           ),
           // Image section
           GestureDetector(
-            onDoubleTap: () {
+            onDoubleTap: () async {
+              await FirestoreMehods().likePost(widget.snap['postId'], user.uid, widget.snap['likes']);
               setState(() {
                 isLikeAnimating = true;
               });
@@ -104,7 +105,7 @@ class _PostCardState extends State<PostCard> {
                 ),
                 AnimatedOpacity(
                   duration: const Duration(milliseconds: 200),
-                  opacity: isLikeAnimating?1 : 0,
+                  opacity: isLikeAnimating ? 1 : 0,
                   child: LikeAnimation(
                     child: const Icon(
                       Icons.favorite,
@@ -132,10 +133,16 @@ class _PostCardState extends State<PostCard> {
                 isAnimating: (widget.snap["likes"] as List).contains(user.uid),
                 smallLike: true,
                 child: IconButton(
-                  onPressed: () {},
-                  icon: const Icon(
+                  onPressed: () async {
+                    await FirestoreMehods().likePost(
+                        widget.snap['postId'], user.uid, widget.snap['likes']);
+                  },
+                  icon: (widget.snap['likes'] as List).contains(user.uid) ? const Icon(
                     Icons.favorite,
                     color: Colors.red,
+                  ) : const Icon(
+                    Icons.favorite_border,
+                    color: Colors.white,
                   ),
                 ),
               ),
@@ -211,7 +218,8 @@ class _PostCardState extends State<PostCard> {
                   padding: const EdgeInsets.symmetric(vertical: 4),
                   child: Text(
                     DateFormat.yMMMd()
-                        .format((widget.snap['datePublished'] as Timestamp).toDate())
+                        .format((widget.snap['datePublished'] as Timestamp)
+                            .toDate())
                         .toString(),
                     style: const TextStyle(
                       fontSize: 16,

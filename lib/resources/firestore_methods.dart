@@ -7,13 +7,13 @@ import 'package:uuid/uuid.dart';
 
 class FirestoreMehods {
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  Future<String> uploadPost(
-  { required String description,
+  Future<String> uploadPost({
+    required String description,
     required Uint8List file,
     required String uid,
     required String profImage,
-    required String username,}
-  ) async {
+    required String username,
+  }) async {
     // asking uid here because we dont want to make extra calls to firebase auth when we can just get from our state management
     String res = "Some error occurred";
     try {
@@ -36,5 +36,22 @@ class FirestoreMehods {
       res = err.toString();
     }
     return res;
+  }
+
+  Future<void> likePost(String postId, String uid, List likes) async {
+    try {
+      if (likes.contains(uid)) {
+        await _firestore.collection('posts').doc(postId).update({
+          'likes': FieldValue.arrayRemove([uid])
+        });
+      }
+      else{
+        await _firestore.collection('posts').doc(postId).update({
+          'likes': FieldValue.arrayUnion([uid])
+        }); 
+      }
+    } catch (e) {
+      print(e.toString());
+    }
   }
 }
