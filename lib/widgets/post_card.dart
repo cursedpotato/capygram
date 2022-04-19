@@ -1,6 +1,7 @@
 import 'package:capygram/models/user_model.dart';
 import 'package:capygram/providers/user_providers.dart';
 import 'package:capygram/resources/firestore_methods.dart';
+import 'package:capygram/screens/comment_screen.dart';
 import 'package:capygram/utils/colors.dart';
 import 'package:capygram/widgets/like_animation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -147,7 +148,7 @@ class _PostCardState extends State<PostCard> {
                 ),
               ),
               IconButton(
-                onPressed: () {},
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => CommentScreen())),
                 icon: const Icon(
                   Icons.comment_outlined,
                 ),

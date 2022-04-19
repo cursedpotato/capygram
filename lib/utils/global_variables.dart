@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 const webScreenSize = 600;
 
 List<Widget> homeScreenItems = [
-  FeedScreen(),
+  const FeedScreen(),
   const Text('Search'),
   AddPostScreen(),
   const Text('Favorite'),
