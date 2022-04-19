@@ -1,6 +1,9 @@
+import 'package:capygram/models/user_model.dart';
+import 'package:capygram/providers/user_providers.dart';
 import 'package:capygram/utils/colors.dart';
 import 'package:capygram/widgets/comment_card.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class CommentScreen extends StatefulWidget {
   CommentScreen({Key? key}) : super(key: key);
@@ -10,8 +13,10 @@ class CommentScreen extends StatefulWidget {
 }
 
 class _CommentScreenState extends State<CommentScreen> {
+  
   @override
   Widget build(BuildContext context) {
+    final UserModel user = Provider.of<UserProvider>(context).getUser;
     return Scaffold(
       appBar: AppBar(
         backgroundColor: mobileBackgroundColor,
@@ -27,17 +32,17 @@ class _CommentScreenState extends State<CommentScreen> {
         padding: const EdgeInsets.only(left: 16, right: 8),
         child: Row(
           children: [
-            const CircleAvatar(
+            CircleAvatar(
               backgroundImage: NetworkImage(
-                  'https://image.shutterstock.com/image-illustration/grungy-painted-wood-texture-background-600w-262857968.jpg'),
+                  user.photoUrl),
               radius: 18,
             ),
-            const Expanded(
+            Expanded(
               child: Padding(
-                padding: EdgeInsets.only(left: 16, right: 8),
+                padding: const EdgeInsets.only(left: 16, right: 8),
                 child: TextField(
                   decoration: InputDecoration(
-                    hintText: 'Comment as a user',
+                    hintText: 'Comment as ${user.username}',
                     border: InputBorder.none,
                   ),
                 ),
