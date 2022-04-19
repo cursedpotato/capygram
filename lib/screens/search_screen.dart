@@ -53,7 +53,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     return ListTile(
                       leading: CircleAvatar(
                           backgroundImage: NetworkImage(
-                              snapshot.data!.docs[index]["photoUrl"])),
+                              snapshot.data!.docs[index]["photoUrl"]),
+                      ),
+                       title: Text(snapshot.data!.docs[index]["username"]),
                     );
                   },
                 );
@@ -66,7 +68,7 @@ class _SearchScreenState extends State<SearchScreen> {
                 if (!snapshot.hasData) {
                   return const CircularProgressIndicator();
                 }
-
+                // TODO: update this package to 6.0.1
                 return StaggeredGridView.countBuilder(
                   crossAxisCount: 3,
                   itemCount: snapshot.data!.docs.length,
