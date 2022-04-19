@@ -3,6 +3,7 @@ import 'package:capygram/providers/user_providers.dart';
 import 'package:capygram/resources/firestore_methods.dart';
 import 'package:capygram/screens/comment_screen.dart';
 import 'package:capygram/utils/colors.dart';
+import 'package:capygram/utils/utils.dart';
 import 'package:capygram/widgets/like_animation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -19,6 +20,28 @@ class PostCard extends StatefulWidget {
 
 class _PostCardState extends State<PostCard> {
   bool isLikeAnimating = false;
+  int commentLen = 0;
+  @override
+  void initState() {
+    super.initState();
+    getComments();
+  }
+
+  getComments() async {
+    try {
+      final QuerySnapshot snap = await FirebaseFirestore.instance
+          .collection('posts')
+          .doc(widget.snap['postId'])
+          .collection('comments')
+          .get();
+
+      commentLen = snap.docs.length;
+    } catch (e) {
+      showSnackbar(context, e.toString());
+    }
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     final UserModel user = Provider.of<UserProvider>(context).getUser;
@@ -88,7 +111,8 @@ class _PostCardState extends State<PostCard> {
           // Image section
           GestureDetector(
             onDoubleTap: () async {
-              await FirestoreMehods().likePost(widget.snap['postId'], user.uid, widget.snap['likes']);
+              await FirestoreMehods().likePost(
+                  widget.snap['postId'], user.uid, widget.snap['likes']);
               setState(() {
                 isLikeAnimating = true;
               });
@@ -138,17 +162,22 @@ class _PostCardState extends State<PostCard> {
                     await FirestoreMehods().likePost(
                         widget.snap['postId'], user.uid, widget.snap['likes']);
                   },
-                  icon: (widget.snap['likes'] as List).contains(user.uid) ? const Icon(
-                    Icons.favorite,
-                    color: Colors.red,
-                  ) : const Icon(
-                    Icons.favorite_border,
-                    color: Colors.white,
-                  ),
+                  icon: (widget.snap['likes'] as List).contains(user.uid)
+                      ? const Icon(
+                          Icons.favorite,
+                          color: Colors.red,
+                        )
+                      : const Icon(
+                          Icons.favorite_border,
+                          color: Colors.white,
+                        ),
                 ),
               ),
               IconButton(
-                onPressed: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => CommentScreen(snap: widget.snap,))),
+                onPressed: () => Navigator.of(context).push(MaterialPageRoute(
+                    builder: (_) => CommentScreen(
+                          snap: widget.snap,
+                        ))),
                 icon: const Icon(
                   Icons.comment_outlined,
                 ),
@@ -206,9 +235,9 @@ class _PostCardState extends State<PostCard> {
                   onTap: () {},
                   child: Container(
                     padding: const EdgeInsets.symmetric(vertical: 4),
-                    child: const Text(
-                      'View all 200 comments',
-                      style: TextStyle(
+                    child: Text(
+                      'View all ${commentLen} comments',
+                      style: const TextStyle(
                         fontSize: 16,
                         color: secondaryColor,
                       ),
