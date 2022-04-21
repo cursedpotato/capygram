@@ -1,3 +1,4 @@
+import 'package:capygram/screens/profile_screen.dart';
 import 'package:capygram/utils/colors.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -39,6 +40,7 @@ class _SearchScreenState extends State<SearchScreen> {
                   .collection('users')
                   .where('username',
                       isGreaterThanOrEqualTo: searchController.text)
+                  .orderBy('username', descending: true)
                   .get(),
               builder: (BuildContext context,
                   AsyncSnapshot<QuerySnapshot> snapshot) {
@@ -51,11 +53,12 @@ class _SearchScreenState extends State<SearchScreen> {
                   itemCount: snapshot.data!.docs.length,
                   itemBuilder: (BuildContext context, int index) {
                     return ListTile(
+                      onTap: () => Navigator.of(context).push(MaterialPageRoute(builder: (_) => ProfileScreen(uid: snapshot.data!.docs[index]['uid']))),
                       leading: CircleAvatar(
-                          backgroundImage: NetworkImage(
-                              snapshot.data!.docs[index]["photoUrl"]),
+                        backgroundImage: NetworkImage(
+                            snapshot.data!.docs[index]["photoUrl"]),
                       ),
-                       title: Text(snapshot.data!.docs[index]["username"]),
+                      title: Text(snapshot.data!.docs[index]["username"]),
                     );
                   },
                 );
