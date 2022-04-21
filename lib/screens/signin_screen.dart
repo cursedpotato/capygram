@@ -4,6 +4,7 @@ import 'package:capygram/resources/auth_methods.dart';
 import 'package:capygram/responsive/mobile_screen_layout.dart';
 import 'package:capygram/screens/login_screen.dart';
 import 'package:capygram/utils/colors.dart';
+import 'package:capygram/utils/global_variables.dart';
 import 'package:capygram/utils/utils.dart';
 import 'package:capygram/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
@@ -76,11 +77,15 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _size = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
+          
+          padding: _size > webScreenSize
+              ? EdgeInsets.symmetric(horizontal: _size / 3)
+              : const EdgeInsets.symmetric(horizontal: 32),
           width: double.infinity,
           child: ListView(
             children: [

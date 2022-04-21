@@ -16,10 +16,11 @@ void main() async {
     Firebase.initializeApp(
       options: const FirebaseOptions(
         apiKey: "AIzaSyBphuNlMBK2rhRsXLo1x8J7KT0tz8jYP5k",
-        appId: "capygram-aae3d",
-        messagingSenderId: "101216335639",
+        authDomain: "capygram-aae3d.firebaseapp.com",
+        projectId: "capygram-aae3d",
         storageBucket: "capygram-aae3d.appspot.com",
-        projectId: "1:101216335639:web:7ec5614696637da2dca952",
+        messagingSenderId: "101216335639",
+        appId: "1:101216335639:web:40984ea7f9fdec5bdca952",
       ),
     );
   } else {}
