@@ -9,10 +9,13 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:capygram/firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+
   WidgetsFlutterBinding.ensureInitialized();
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -25,9 +28,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
-      providers: [
-        ChangeNotifierProvider(create: (_) => UserProvider())
-      ],
+      providers: [ChangeNotifierProvider(create: (_) => UserProvider())],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         title: 'Capygram',
@@ -49,19 +50,19 @@ class MyApp extends StatelessWidget {
                 return Center(
                   child: Text('${snapshot.error}'),
                 );
-              }if (snapshot.connectionState == ConnectionState.waiting) {
+              }
+              if (snapshot.connectionState == ConnectionState.waiting) {
                 return const Center(
-                  child:  CircularProgressIndicator(color: primaryColor),
+                  child: CircularProgressIndicator(color: primaryColor),
                 );
               }
-              
             }
             if (snapshot.connectionState == ConnectionState.waiting) {
-                return const Center(
-                  child:  CircularProgressIndicator(color: primaryColor),
-                );
-              }
-            return const LoginScreen(); 
+              return const Center(
+                child: CircularProgressIndicator(color: primaryColor),
+              );
+            }
+            return const LoginScreen();
           },
         ),
       ),
