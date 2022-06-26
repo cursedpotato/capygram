@@ -74,14 +74,6 @@ class AuthMethods {
         res = 'Please enter all fields';
       }
     }
-    // You can specify the errors here
-    
-    // on FirebaseAuthException catch(e){
-    //   if (e.code == 'user-not-found') {
-        
-    //   } else {
-    //   }
-    // } 
     catch (e) {
       res = e.toString();
     }

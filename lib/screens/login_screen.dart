@@ -4,6 +4,7 @@ import 'package:capygram/responsive/responsive_layout_screen.dart';
 import 'package:capygram/responsive/web_screen_layout.dart';
 import 'package:capygram/screens/signin_screen.dart';
 import 'package:capygram/utils/colors.dart';
+import 'package:capygram/utils/global_variables.dart';
 import 'package:capygram/utils/utils.dart';
 import 'package:capygram/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
@@ -52,8 +53,10 @@ class _LoginScreenState extends State<LoginScreen> {
       _isLoading = false;
     });
     if (res == "Success") {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (_) => const ResponsiveLayout(webScreenLayout: WebScreenLayout(), mobileScreenLayout: MobileScreenLayout())));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (_) => const ResponsiveLayout(
+              webScreenLayout: WebScreenLayout(),
+              mobileScreenLayout: MobileScreenLayout())));
       showSnackbar(context, res);
     } else {
       showSnackbar(context, res);
@@ -61,7 +64,8 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void navigateToSignUp() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_)=> const SignupScreen()));
+    Navigator.of(context)
+        .push(MaterialPageRoute(builder: (_) => const SignupScreen()));
   }
 
   @override
@@ -69,7 +73,11 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
+          //TODO: It's possible to refactor in a more readable way
+          padding: MediaQuery.of(context).size.width > webScreenSize
+              ? EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width / 3)
+              : const EdgeInsets.symmetric(horizontal: 32),
           width: double.infinity,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,

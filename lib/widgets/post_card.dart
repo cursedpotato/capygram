@@ -3,6 +3,7 @@ import 'package:capygram/providers/user_providers.dart';
 import 'package:capygram/resources/firestore_methods.dart';
 import 'package:capygram/screens/comment_screen.dart';
 import 'package:capygram/utils/colors.dart';
+import 'package:capygram/utils/global_variables.dart';
 import 'package:capygram/utils/utils.dart';
 import 'package:capygram/widgets/like_animation.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -47,12 +48,16 @@ class _PostCardState extends State<PostCard> {
   @override
   Widget build(BuildContext context) {
     final UserModel user = Provider.of<UserProvider>(context).getUser;
+    final width = MediaQuery.of(context).size.width;
+
     return Container(
+      
       color: mobileBackgroundColor,
-      padding: const EdgeInsets.symmetric(vertical: 10),
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 10),
       child: Column(
         children: [
           // Header section
+          
           Container(
             padding: const EdgeInsets.symmetric(
               vertical: 4,
@@ -65,20 +70,19 @@ class _PostCardState extends State<PostCard> {
                   backgroundImage: NetworkImage(widget.snap["profImage"]),
                 ),
                 GestureDetector(
-                  onTap:  () => Navigator.of(context).push(MaterialPageRoute(builder: (_)=> ProfileScreen(uid: widget.snap["uid"]))),
-                  child: Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(left: 8),
-                      child: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            widget.snap['username'],
-                            style: const TextStyle(fontWeight: FontWeight.bold),
-                          ),
-                        ],
-                      ),
+                  onTap: () => Navigator.of(context).push(MaterialPageRoute(
+                      builder: (_) => ProfileScreen(uid: widget.snap["uid"]))),
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 8),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          widget.snap['username'],
+                          style: const TextStyle(fontWeight: FontWeight.bold),
+                        ),
+                      ],
                     ),
                   ),
                 ),
@@ -94,7 +98,8 @@ class _PostCardState extends State<PostCard> {
                               .map(
                                 (e) => InkWell(
                                   onTap: () {
-                                    FirestoreMehods().deletePost(widget.snap['postId']);
+                                    FirestoreMehods()
+                                        .deletePost(widget.snap['postId']);
                                     Navigator.of(context).pop();
                                   },
                                   child: Container(

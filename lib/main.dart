@@ -33,9 +33,6 @@ class MyApp extends StatelessWidget {
         title: 'Capygram',
         theme: ThemeData.dark()
             .copyWith(scaffoldBackgroundColor: mobileBackgroundColor),
-        // home: const ResponsiveLayout(
-        //     webScreenLayout: WebScreenLayout(),
-        //     mobileScreenLayout: MobileScreenLayout()),
         home: StreamBuilder(
           stream: FirebaseAuth.instance.authStateChanges(),
           builder: (BuildContext context, AsyncSnapshot snapshot) {

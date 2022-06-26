@@ -3,7 +3,6 @@ import 'package:capygram/utils/global_variables.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
-
 class WebScreenLayout extends StatefulWidget {
   const WebScreenLayout({Key? key}) : super(key: key);
 
@@ -48,9 +47,9 @@ class _WebScreenLayoutState extends State<WebScreenLayout> {
         backgroundColor: mobileBackgroundColor,
         centerTitle: false,
         title: SvgPicture.asset(
-          'assets/ic_instagram.svg',
+          "assets/capygram_svg.svg",
           color: primaryColor,
-          height: 32,
+          height: 60,
         ),
         actions: [
           IconButton(

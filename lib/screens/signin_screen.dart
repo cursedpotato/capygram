@@ -4,6 +4,7 @@ import 'package:capygram/resources/auth_methods.dart';
 import 'package:capygram/responsive/mobile_screen_layout.dart';
 import 'package:capygram/screens/login_screen.dart';
 import 'package:capygram/utils/colors.dart';
+import 'package:capygram/utils/global_variables.dart';
 import 'package:capygram/utils/utils.dart';
 import 'package:capygram/widgets/custom_textfield.dart';
 import 'package:flutter/material.dart';
@@ -62,8 +63,10 @@ class _SignupScreenState extends State<SignupScreen> {
       _isLoading = false;
     });
     if (res == "success") {
-      Navigator.of(context)
-          .pushReplacement(MaterialPageRoute(builder: (_) => const ResponsiveLayout(webScreenLayout: WebScreenLayout(), mobileScreenLayout: MobileScreenLayout())));
+      Navigator.of(context).pushReplacement(MaterialPageRoute(
+          builder: (_) => const ResponsiveLayout(
+              webScreenLayout: WebScreenLayout(),
+              mobileScreenLayout: MobileScreenLayout())));
       showSnackbar(context, "Yay! Your account has been created");
     } else {
       showSnackbar(context, res);
@@ -71,7 +74,9 @@ class _SignupScreenState extends State<SignupScreen> {
   }
 
   navigateToLogin() {
-    Navigator.of(context).push(MaterialPageRoute(builder: (_) => const LoginScreen() ,));
+    Navigator.of(context).push(MaterialPageRoute(
+      builder: (_) => const LoginScreen(),
+    ));
   }
 
   @override
@@ -80,7 +85,11 @@ class _SignupScreenState extends State<SignupScreen> {
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 32),
+          // TODO: refactor to be more readable
+          padding: MediaQuery.of(context).size.width > webScreenSize
+              ? EdgeInsets.symmetric(
+                  horizontal: MediaQuery.of(context).size.width / 3)
+              : const EdgeInsets.symmetric(horizontal: 32),
           width: double.infinity,
           child: ListView(
             children: [
