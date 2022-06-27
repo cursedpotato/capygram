@@ -70,13 +70,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _size = MediaQuery.of(context).size.width;
     return Scaffold(
       body: SafeArea(
         child: Container(
-          //TODO: It's possible to refactor in a more readable way
-          padding: MediaQuery.of(context).size.width > webScreenSize
-              ? EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width / 3)
+          padding: _size > webScreenSize
+              ? EdgeInsets.symmetric(horizontal: _size / 3)
               : const EdgeInsets.symmetric(horizontal: 32),
           width: double.infinity,
           child: Column(

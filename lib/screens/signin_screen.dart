@@ -81,14 +81,13 @@ class _SignupScreenState extends State<SignupScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final _size = MediaQuery.of(context).size.width;
     return Scaffold(
       resizeToAvoidBottomInset: false,
       body: SafeArea(
         child: Container(
-          // TODO: refactor to be more readable
-          padding: MediaQuery.of(context).size.width > webScreenSize
-              ? EdgeInsets.symmetric(
-                  horizontal: MediaQuery.of(context).size.width / 3)
+          padding: _size > webScreenSize
+              ? EdgeInsets.symmetric(horizontal: _size / 3)
               : const EdgeInsets.symmetric(horizontal: 32),
           width: double.infinity,
           child: ListView(
