@@ -98,7 +98,7 @@ class _SignupScreenState extends State<SignupScreen> {
                 color: Colors.white,
                 height: 235,
               ),
-              // Circular widget to accept and show our selected file
+              // Circular widget to accept and show our selected fil
               Center(
                 child: Stack(
                   children: [
